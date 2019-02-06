@@ -10,5 +10,5 @@ ActionController::Renderers.add :xls do |filename, options|
   disposition = options.delete(:disposition) || "attachment"
   file_name = options.delete(:filename) || "#{filename.gsub(/^.*\//, "")}.xls"
 
-  send_data render_to_string(options), type: Mime[:xls], filename: file_name, disposition: disposition
+  send_data render_to_string(options), type: Columnify::Mime::XLS, filename: file_name, disposition: disposition
 end

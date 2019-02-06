@@ -45,7 +45,7 @@ end
 
 class ColumnifyHandler
   cattr_accessor :default_format
-  self.default_format = "application/xls"
+  self.default_format = Columnify::Mime::XLS
 
   def self.call(template, source = nil)
     source ||= template.source
