@@ -7,6 +7,7 @@ The `columnify` gem helps you easily render Excel files through your controller 
 - [Columnify](#columnify)
   - [Table of contents](#table-of-contents)
   - [Installing Columnify](#installing-columnify)
+  - [Usage](#usage)
   - [Contributing](#contributing)
   - [License](#license)
   - [Code of Conduct](#code-of-conduct)
@@ -38,6 +39,17 @@ $ rails g columnify:install
 ```
 
 This will just register the `xls` mime type inside the `config/initializers/mime_types.rb` file.
+
+## Usage
+
+The gem will add a renderer and a template handler for you to easily handle the creation of the Excel file:
+
+```ruby
+# app/views/posts/index.xls.columnify
+spreadsheet.workbook @posts, :id, :title, :content
+```
+
+So the usage for the views is just to call the `workbook` method, send the array or active record collection, followed by the set of attributes or methods you want to appear on the `xls` file.
 
 ## Contributing
 
