@@ -46,7 +46,7 @@ The gem will add a renderer and a template handler for you to easily handle the 
 
 ```ruby
 # app/views/posts/index.xls.columnify
-spreadsheet.workbook @posts, :id, :title, :content
+spreadsheet.worksheet @posts, :id, :title, :content
 ```
 
 So the usage for the views is just to call the `workbook` method, send the array or active record collection, followed by the set of attributes or methods you want to appear on the `xls` file.
