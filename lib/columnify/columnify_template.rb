@@ -2,7 +2,7 @@
 
 require 'action_dispatch/http/mime_type'
 require 'spreadsheet'
-require 'worksheet'
+require 'columnify/worksheet'
 
 class ColumnifyTemplate
   class << self
