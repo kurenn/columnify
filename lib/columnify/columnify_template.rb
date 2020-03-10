@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require "action_dispatch/http/mime_type"
-require "spreadsheet"
+require 'action_dispatch/http/mime_type'
+require 'spreadsheet'
+require 'worksheet'
 
 class ColumnifyTemplate
   class << self
@@ -15,31 +16,9 @@ class ColumnifyTemplate
     super(*args)
   end
 
-  def workbook
-    @workbook ||= Spreadsheet::Workbook.new
-  end
-
   def worksheet(resources, *args)
-    sheet = workbook.create_worksheet(name: worksheet_name.to_s)
-
-    sheet.row(0).concat args.map(&:to_s).map(&:humanize)
-
-    resources.each_with_index do |resource, index|
-      args.each do |method_name|
-        sheet.row(index + 1).push(resource.send(method_name))
-      end
-    end
-
-    buffer = StringIO.new
-    workbook.write(buffer)
-    buffer.rewind
-    buffer.read
-  end
-
-  private
-
-  def worksheet_name
-    DateTime.now.to_i
+    worksheet = Columnify::Worksheet.new(resources, *args)
+    worksheet.create
   end
 end
 
