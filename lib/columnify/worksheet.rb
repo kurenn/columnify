@@ -4,7 +4,7 @@ module Columnify
   class Worksheet
 
     def initialize(resources, *args)
-      @resources = resorurces
+      @resources = resources
       @column_names = args
       @buffer = StringIO.new
       @workbook ||= Spreadsheet::Workbook.new
