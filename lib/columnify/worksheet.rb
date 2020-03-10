@@ -41,7 +41,8 @@ module Columnify
     end
 
     def humanized_columns
-      @humanized_columns ||= @column_names.map(&:to_s).map(&:humanize)
+      @humanized_columns ||= @column_names
+                             .map { |column_name| resource_klass.human_name(column_name) }
     end
 
     def sheet
@@ -50,6 +51,10 @@ module Columnify
 
     def worksheet_name
       Time.now.to_i.to_s
+    end
+
+    def resource_klass
+      @resource_klass ||= @resources[0].class
     end
   end
 end
