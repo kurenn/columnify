@@ -7,7 +7,7 @@ module Columnify
       @resources = resources
       @column_names = args
       @buffer = StringIO.new
-      @workbook ||= Spreadsheet::Workbook.new
+      @workbook = Spreadsheet::Workbook.new
     end
 
     def create
@@ -45,7 +45,7 @@ module Columnify
     end
 
     def sheet
-      @sheet ||= workbook.create_worksheet(name: worksheet_name)
+      @sheet ||= @workbook.create_worksheet(name: worksheet_name)
     end
 
     def worksheet_name
