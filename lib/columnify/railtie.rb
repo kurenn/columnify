@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails'
+
 module Columnify
   class Railtie < Rails::Railtie
     initializer :columnify do
