@@ -2,10 +2,11 @@
 
 module Columnify
   class Worksheet
-
     def initialize(resources, *args)
+      @options = args.extract_options!
+      @column_names = @options[:column_names].presence || args
+      @attributes = args
       @resources = resources
-      @column_names = args
       @buffer = StringIO.new
       @workbook = Spreadsheet::Workbook.new
     end
@@ -34,15 +35,14 @@ module Columnify
 
     def inject_data
       @resources.each_with_index do |resource, index|
-        @column_names.each do |method_name|
+        @attributes.each do |method_name|
           sheet.row(index + 1).push(resource.send(method_name))
         end
       end
     end
 
     def humanized_columns
-      @humanized_columns ||= @column_names
-                             .map { |column_name| resource_klass.human_name(column_name) }
+      @humanized_columns ||= @column_names.map(&:to_s).map(&:humanize)
     end
 
     def sheet
@@ -51,10 +51,6 @@ module Columnify
 
     def worksheet_name
       Time.now.to_i.to_s
-    end
-
-    def resource_klass
-      @resource_klass ||= @resources[0].class
     end
   end
 end
