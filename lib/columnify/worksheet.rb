@@ -35,15 +35,16 @@ module Columnify
 
     def inject_data
       @resources.each_with_index do |resource, index|
+        sheet.column(index).default_format = cell_format
         @attributes.each do |method_name|
-          sheet.column(index).default_format = cell_format
+          sheet.row(index + 1).default_format = cell_format
           sheet.row(index + 1).push(resource.send(method_name))
         end
       end
     end
 
     def cell_format
-       @cell_format ||= Spreadsheet::Format.new text_wrap: true
+      @cell_format ||= Spreadsheet::Format.new text_wrap: true
     end
 
     def humanized_columns
