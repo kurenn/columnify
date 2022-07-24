@@ -38,7 +38,13 @@ module Columnify
         sheet.column(index).default_format = cell_format
         @attributes.each do |method_name|
           sheet.row(index + 1).default_format = cell_format
-          sheet.row(index + 1).push(resource.send(method_name))
+          value = resource.send(method_name)
+
+          if value.is_a? Array
+            value.each { |v| sheet.row(index + 1).push(v) }
+          else
+            sheet.row(index + 1).push(value)
+          end
         end
       end
     end
